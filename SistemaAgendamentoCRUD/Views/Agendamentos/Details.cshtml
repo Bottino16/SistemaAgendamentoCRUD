@@ -1,0 +1,80 @@
+﻿@model SistemaAgendamentoCRUD.Models.Agendamento
+
+@{
+    ViewData["Title"] = "Detalhes do Agendamento";
+}
+
+<style>
+    .details-card {
+        background-color: #111827;
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .info-box {
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .btn-action-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+
+    .btn-cancel {
+        background-color: #1f2937;
+        color: #9ca3af;
+        border: 1px solid #374151;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="details-card p-4 p-md-5 mb-5 shadow-lg">
+    <div class="mb-4">
+        <a asp-action="Index" class="text-decoration-none text-secondary small d-inline-flex align-items-center gap-1 mb-2">
+            <i class="bi bi-arrow-left"></i> Voltar para a lista
+        </a>
+        <h3 class="fw-bold text-white mb-1">Detalhes do Agendamento</h3>
+        <p class="text-secondary small m-0">Informações completas sobre a reserva.</p>
+    </div>
+
+    <div class="d-flex flex-column gap-3 mb-4">
+        <div class="info-box">
+            <span class="text-secondary small d-block mb-1">Cliente / Usuário</span>
+            <span class="fs-5 fw-bold text-white">@(Model.Usuario?.Nome ?? "Não informado")</span>
+            @if (!string.IsNullOrEmpty(Model.Usuario?.Telefone))
+            {
+                <span class="d-block text-secondary small mt-1"><i class="bi bi-telephone"></i> @Model.Usuario.Telefone</span>
+            }
+        </div>
+
+        <div class="info-box">
+            <span class="text-secondary small d-block mb-1">Serviço Prestado</span>
+            <span class="fs-5 fw-bold text-white">@(Model.Servico?.Nome ?? "Não informado")</span>
+            @if (Model.Servico != null)
+            {
+                <span class="d-block text-warning fw-semibold mt-1">@Model.Servico.Preco.ToString("C")</span>
+            }
+        </div>
+
+        <div class="info-box">
+            <span class="text-secondary small d-block mb-1">Data e Horário</span>
+            <span class="fs-5 fw-bold text-info"><i class="bi bi-calendar-check me-2"></i>@Model.DataHora.ToString("dd/MM/yyyy - HH:mm")</span>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary border-opacity-25">
+        <a asp-action="Index" class="btn btn-cancel text-decoration-none">Voltar</a>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-action-primary text-decoration-none">Editar Agendamento</a>
+    </div>
+</div>

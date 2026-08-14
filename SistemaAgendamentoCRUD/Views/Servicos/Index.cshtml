@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SistemaAgendamentoCRUD.Models.Servico>
+
+@{
+    ViewData["Title"] = "Serviços";
+}
+
+<style>
+    .table-card {
+        background-color: #111827;
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .table-dark-custom {
+        --bs-table-bg: transparent;
+        --bs-table-color: #f9fafb;
+        color: #f9fafb;
+        margin-bottom: 0;
+    }
+
+        .table-dark-custom th {
+            background-color: #1f2937;
+            color: #9ca3af;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #374151;
+            padding: 16px;
+        }
+
+        .table-dark-custom td {
+            border-bottom: 1px solid #1f2937;
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+    .btn-action-warning {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border: none;
+        color: #111827;
+        font-weight: 700;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        color: #d1d5db;
+        transition: all 0.2s ease;
+    }
+
+        .btn-icon:hover {
+            background-color: #374151;
+            color: #ffffff;
+        }
+
+    .btn-icon-danger:hover {
+        background-color: #7f1d1d;
+        border-color: #ef4444;
+        color: #fca5a5;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <h3 class="fw-bold text-white mb-1">Serviços Oferatdos</h3>
+            <p class="text-secondary small m-0">Lista de serviços e modalidades de atendimento disponíveis.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-action-warning text-decoration-none">+ Novo Serviço</a>
+    </div>
+
+    <div class="table-card shadow-lg">
+        <div class="table-responsive">
+            <table class="table table-dark-custom">
+                <thead>
+                    <tr>
+                        <th>Nome do Serviço</th>
+                        <th>Preço / Valor</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-secondary py-5">
+                                <i class="bi bi-tools display-6 d-block mb-2"></i>
+                                Nenhum serviço cadastrado até o momento.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold text-white">@item.Nome</td>
+                                <td class="text-warning fw-bold">@item.Preco.ToString("C")</td>
+                                <td class="text-end">
+                                    <div class="d-inline-flex gap-2">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-icon text-decoration-none" title="Editar"><i class="bi bi-pencil"></i></a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-icon text-decoration-none" title="Detalhes"><i class="bi bi-eye"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-icon btn-icon-danger text-decoration-none" title="Excluir"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
